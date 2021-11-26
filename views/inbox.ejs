@@ -344,6 +344,7 @@
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         if (data.errors) {
           searchError.style.display = "block";
           searchError.innerHTML = `<p>${data.errors.msg}</p>`;
@@ -352,9 +353,12 @@
 
           let usersHtml = "<div>";
           data.user.forEach((element) => {
-            usersHtml += `<div onclick="createConversation('${element._id}', '${
-              element.name
-            }', '${element.avatar}')" class="singleChatUser">
+            if (element._id !== loginUserId) {
+              usersHtml += `<div onclick="createConversation('${
+                element._id
+              }', '${element.name}', '${
+                element.avatar
+              }')" class="singleChatUser">
             <img src="uploads/avatar/${
               element.avatar ? element.avatar : "blank.png"
             }" alt="single user images" />
@@ -362,6 +366,7 @@
               <h4>${element.name}</h4>
             </div>
           </div>`;
+            }
           });
           usersHtml += "</div>";
           allUser.innerHTML = usersHtml;
