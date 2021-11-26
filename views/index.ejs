@@ -1,0 +1,39 @@
+<%-include('./includes/__header.ejs')%>
+<main>
+  <section class="login_section">
+    <div class="loginDiv">
+      <i class="fas fa-comments"></i>
+      <h2>Chat Application</h2>
+
+      <!-- login alert show -->
+      <%if (errors && errors.common) { %>
+      <div class="errors_login">
+        <p><%=errors.common.msg%></p>
+        <i onclick="errorMsgRemove()" class="fal fa-times"></i>
+      </div>
+      <% } %>
+      <!-- /login alert show -->
+
+      <div class="container_form">
+        <form action="/" method="POST">
+          <label for="username"> Email address</label>
+          <input type="text" name="email" />
+          <label for="password">Password</label>
+          <input type="password" name="password" />
+          <input type="submit" value="Sign in" />
+        </form>
+      </div>
+      <div class="create_new">
+        <a href="#">Forgot password?</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  // error message remove function
+  function errorMsgRemove() {
+    document.querySelector(".errors_login").style.display = "none";
+  }
+</script>
+<%-include('./includes/__footer.ejs')%>

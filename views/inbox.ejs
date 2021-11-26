@@ -1,0 +1,570 @@
+<%-include('./includes/__header.ejs')%>
+<main>
+  <!-- popup module  -->
+  <div class="module">
+    <div class="moduleBody">
+      <div class="crossBtn">
+        <i class="fal fa-times"></i>
+      </div>
+      <form id="addNewUserForm" enctype="multipart/form-data">
+        <label for="name">Name</label>
+        <input class="UserName" type="text" name="name" />
+        <label for="email">Email Address</label>
+        <input class="userEmail" type="email" name="email" />
+        <label for="password">Enter a strong password</label>
+        <input class="userPassword" type="password" name="password" />
+        <label for="profilePicture">Upload a profile picture</label>
+        <input type="file" name="profilePicture" />
+        <input type="submit" />
+      </form>
+    </div>
+  </div>
+  <!-- /popup module  -->
+  <section id="chatRoom">
+    <div class="container">
+      <div class="allUsers">
+        <div class="searchBarAndTitle">
+          <div class="chatHeader">
+            <h2>Hi, <%=locals.logInUser.name%></h2>
+            <i class="far fa-ellipsis-h settingIcon"></i>
+            <div class="settingOption">
+              <span class="addUser"
+                ><i class="fad fa-user-plus"></i> Add User</span
+              >
+              <span onclick="logout()" class="logout"
+                ><i class="fad fa-sign-out"></i> Logout</span
+              >
+            </div>
+          </div>
+
+          <div class="searchError"></div>
+          <div class="chatSecrchBar">
+            <i class="fal fa-search"></i>
+            <input
+              id="inputSerach"
+              type="text"
+              placeholder="Search Messenger"
+            />
+          </div>
+
+          <!-- <div class="searchUserDiv">
+            <ul>
+              <li>
+                <div class="singleSearchUser">
+                  <div class="search_userImg">
+                    <img src="uploads/avatar/blank.png" alt="...">
+                  </div>
+                  <div class="search_userInfo">
+                    <h4>Fahim muntasir</h4>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div> -->
+        </div>
+        <div class="allChatingUser">
+          <% data.forEach(function (conversation) { %> <%
+          if(conversation.creator.id == logInUser.id) {%>
+          <div
+            class="singleChatUser"
+            onclick="getMessages('<%=conversation._id%>', '<%=conversation.participate.name%>', '<%=conversation.participate.avatar%>')"
+          >
+            <% if(conversation.participate.avatar){ %>
+            <img
+              src="uploads/avatar/<%=conversation.participate.avatar%>"
+              alt="single user images"
+            />
+            <% } else { %>
+            <img src="uploads/avatar/blank.png" alt="single user images" />
+            <% } %>
+            <div class="userInfo">
+              <h4><%=conversation.participate.name %></h4>
+              <span>Create conversation</span>
+            </div>
+          </div>
+          <% } else { %>
+          <div
+            class="singleChatUser"
+            onclick="getMessages('<%=conversation._id%>', '<%=conversation.creator.name%>', '<%=conversation.creator.avatar%>')"
+          >
+            <% if(conversation.creator.avatar){ %>
+            <img
+              src="uploads/avatar/<%=conversation.creator.avatar%>"
+              alt="single user images"
+            />
+            <% } else { %>
+            <img src="uploads/avatar/blank.png" alt="single user images" />
+            <% } %>
+            <div class="userInfo">
+              <h4><%=conversation.creator.name %></h4>
+              <span>Create conversation</span>
+            </div>
+          </div>
+          <% } %> <%})%>
+          <!-- <div class="singleChatUser">
+            <img src="img/mypic.jpg" alt="single user images" />
+            <div class="userInfo">
+              <h4>Fahim muntasir</h4>
+              <span>You: Hi How are you?</span>
+            </div>
+          </div>
+          <div class="singleChatUser">
+            <img src="img/mypic.jpg" alt="single user images" />
+            <div class="userInfo">
+              <h4>Fahim muntasir</h4>
+              <span>You: Hi How are you?</span>
+            </div>
+          </div> -->
+        </div>
+        <div class="appDownloadLink">
+          <a href="#"
+            ><i class="fal fa-download"></i> Install Chat Application</a
+          >
+        </div>
+      </div>
+      <div class="chatBox">
+        <div class="reseveMessegeUserInfo">
+          <h2 class="conversationTitleBeforeCreateCon">
+            Create a conversation
+          </h2>
+          <!-- <div class="userImgInfo">
+            <img src="img/mypic.jpg" alt="single user images" />
+            <div class="nameAndTimeWhenYouSendMsg">
+              <h4 class="current_chatUser_name">Fahim muntasir</h4>
+              <span>Active 4h ago</span>
+            </div>
+          </div>
+          <div class="callInfo">
+            <a href="#"><i class="fal fa-phone-alt"></i></a>
+            <a href="#"><i class="fad fa-video"></i></a>
+            <a href="#"><i class="fal fa-info-circle"></i></a>
+          </div> -->
+        </div>
+        <div class="allMessageHere">
+          <div class="singleMessages_row">
+            <div class="chat sender">
+              <div class="details">
+                <p>.......................................</p>
+              </div>
+            </div>
+            <div class="sender_send_attestMent">
+              <img src="uploads/avatar/blank.png" alt="" />
+              <img src="uploads/avatar/blank.png" alt="" />
+              <img src="uploads/avatar/blank.png" alt="" />
+              <img src="uploads/avatar/blank.png" alt="" />
+              <img src="uploads/avatar/blank.png" alt="" />
+            </div>
+          </div>
+
+          <div class="singleMessages_row">
+            <div class="chat resever">
+              <img src="uploads/avatar/blank.png" alt="..." />
+              <div class="details">
+                <p>......................</p>
+              </div>
+            </div>
+            <div class="resever_send_attestMent">
+              <img src="uploads/avatar/blank.png" alt="" />
+              <img src="uploads/avatar/blank.png" alt="" />
+              <img src="uploads/avatar/blank.png" alt="" />
+              <img src="uploads/avatar/blank.png" alt="" />
+              <img src="uploads/avatar/blank.png" alt="" />
+            </div>
+          </div>
+          <!-- <div class="single_msg_row">
+            <div class="sender-message_row">
+              <div class="sender_msg">
+                <span
+                  >hello worldhello worldhello worldhello worldhello worldhello
+                  worldhello worldhello worldhello worldhello worldhello
+                  worldhello worldhello worldhello worldhello worldhello
+                  worldhello worldhello worldhello worldhello worldhello
+                  worldhello worldhello world</span
+                >
+              </div>
+              <div class="msg_timing">
+                <span>time here</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="single_msg_row">
+            <div class="sender-message_row">
+              <div class="sender_msg">
+                <span
+                  >hello worldhello worldhello worldhello worldhello worldhello
+                  worldhello worldhello worldhello worldhello worldhello
+                  worldhello worldhello worldhello worldhello worldhello
+                  worldhello worldhello worldhello worldhello worldhello
+                  worldhello worldhello world</span
+                >
+              </div>
+              <div class="msg_timing">
+                <span>time here</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="single_msg_row">
+            <div class="resever-message_row">
+              <div class="resever_msg">
+                <img src="img/mypic.jpg" alt="..." />
+                <div class="resever_msg_text">
+                  <span
+                    >hello worldhello worldhello worldhello worldhello
+                    worldhello worldhello worldhello worldhello worldhello
+                    worldhello worldhello worldhello worldhello worldhello
+                    worldhello worldhello worldhello worldhello worldhello
+                    worldhello worldhello worldhello world</span
+                  >
+                </div>
+              </div>
+              <div class="msg_timing">
+                <span>time here</span>
+              </div>
+            </div>
+          </div> -->
+          <!-- <div class="senderMessage">
+            <div class="messageText">
+              <span
+                >Hello worldHello worldHello worldHelloHello worldHello
+                worldHello worldHelloHello worldHello worldHello worldHelloHello
+                worldHello worldHello worldHelloHello worldHello worldHello
+                worldHello
+              </span>
+            </div>
+            <span class="sendMsgTime_send">4 min ago</span>
+          </div>
+          <div class="reseveMessage">
+            <div class="incomingMessageImg">
+              <img src="img/mypic.jpg" alt="single user images" />
+            </div>
+            <div class="messageText">
+              <span
+                >Hello worldHello worldHello worldHelloHello worldHello
+                worldHello worldHelloHello worldHello worldHello worldHelloHello
+                worldHello worldHello worldHelloHello worldHello worldHello
+                worldHelloHello worldHello worldHello worldHello Hello
+                worldHello worldHello worldHelloHello worldHello worldHello
+                worldHelloHello worldHello worldHello worldHelloHello worldHello
+                worldHello worldHelloHello worldHello worldHello worldHelloHello
+                worldHello worldHello worldHello Hello worldHello worldHello
+                worldHelloHello worldHello worldHello worldHelloHello worldHello
+                worldHello worldHelloHello worldHello worldHello worldHelloHello
+                worldHello worldHello worldHelloHello worldHello worldHello
+                worldHello
+              </span>
+            </div>
+            <span></span>
+            <span class="sendMsgTime_reseve">4 min ago</span>
+          </div>
+          <div class="reseveMessage">
+            <div class="incomingMessageImg">
+              <img src="img/mypic.jpg" alt="single user images" />
+            </div>
+            <div class="messageText">
+              <span>Hello world </span>
+            </div>
+            <span></span>
+            <span class="sendMsgTime_reseve">4 min ago</span>
+          </div> -->
+        </div>
+        <div class="sendMessageAllElement">
+          <form id="sendMessage" method="POST" enctype="multipart/form-data">
+            <label for="attestmentFile"><i class="fal fa-images"></i> </label>
+            <input
+              type="file"
+              multiple
+              name="attestmentFile"
+              id="attestmentFile"
+              class="hideInput"
+              accept="image/*"
+            />
+            <input
+              type="text"
+              name="message"
+              placeholder="Ad"
+              autocomplete="off"
+            />
+            <button class="sendMessagesBtn" type="submit">
+              <i class="fad fa-paper-plane"></i>
+            </button>
+            <label for="likeSend"><i class="fad fa-thumbs-up"></i> </label>
+            <input
+              type="text"
+              name="likeSend"
+              id="likeSend"
+              class="hideInput"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+  const socket = io("<%=process.env.APP_URL%>");
+  const inputfild = document.getElementById("inputSerach");
+  const allUser = document.querySelector(".allChatingUser");
+  const searchError = document.querySelector(".searchError");
+  const searchUserList = document.querySelector(".searchUserDiv");
+  const current_userName = document.querySelector(".current_chatUser_name");
+  const sendMessageForm = document.getElementById("sendMessage");
+  const sendMessagesBtn = document.querySelector(".sendMessagesBtn");
+  const messageDiv = document.querySelector(".sendMessageAllElement");
+  const reseveMesegeInfoDiv = document.querySelector(".reseveMessegeUserInfo");
+  const allMessageDiv = document.querySelector(".allMessageHere");
+
+  let typingTimer;
+  const fetchDuration = 500;
+  let participateInfo = null;
+  let current_conversation_id;
+  const loginUserId = "<%=logInUser.id%>";
+
+  inputfild.addEventListener("keyup", function () {
+    clearInterval(typingTimer);
+    if (inputfild.value) {
+      typingTimer = setTimeout(search, fetchDuration);
+    }
+  });
+
+  inputfild.addEventListener("keydown", function () {
+    clearInterval(typingTimer);
+  });
+
+  function search() {
+    fetch("/api/search", {
+      method: "POST",
+      body: JSON.stringify({
+        user: inputfild.value,
+      }),
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.errors) {
+          searchError.style.display = "block";
+          searchError.innerHTML = `<p>${data.errors.msg}</p>`;
+        } else {
+          searchError.style.display = "none";
+
+          let usersHtml = "<div>";
+          data.user.forEach((element) => {
+            usersHtml += `<div onclick="createConversation('${element._id}', '${
+              element.name
+            }', '${element.avatar}')" class="singleChatUser">
+            <img src="uploads/avatar/${
+              element.avatar ? element.avatar : "blank.png"
+            }" alt="single user images" />
+            <div class="userInfo">
+              <h4>${element.name}</h4>
+            </div>
+          </div>`;
+          });
+          usersHtml += "</div>";
+          allUser.innerHTML = usersHtml;
+        }
+      });
+  }
+
+  function createConversation(user_id, user_name, avatar) {
+    fetch("/api/conversation", {
+      method: "POST",
+      body: JSON.stringify({
+        id: user_id,
+        participate: user_name,
+        avatar: avatar !== "undefined" ? avatar : null,
+      }),
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (result) {
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
+        } else {
+          console.log(result.errors.msg);
+        }
+      });
+  }
+
+  // get message function
+  function getMessages(
+    conversation_id,
+    current_conversation_name,
+    current_conversation_avatar
+  ) {
+    fetch(`/api/getmessage/${conversation_id}`)
+      .then((response) => response.json())
+      .then((result) => {
+        const { messages, participate } = result.data;
+        participateInfo = participate;
+        current_conversation_id = conversation_id;
+        if (messages) {
+          if (messages.length > 0) {
+            let messagesHtml = "<div>";
+            messages.forEach((messages) => {
+              if (messages.sender.id === loginUserId) {
+                let senderAttchment = "";
+                if (messages.attchment && messages.attchment.length > 0) {
+                  senderAttchment += "<div class='sender_send_attestMent'>";
+                  messages.attchment.forEach((attchment) => {
+                    senderAttchment += `<img src="uploads/attestment/${attchment}" alt="send_attechment" />`;
+                  });
+                  senderAttchment += "</div>";
+                }
+
+                messagesHtml += `<div class="singleMessages_row">
+                                <div class="chat sender">
+                                  <div class="details">
+                                    <p>
+                                      ${messages.text}
+                                    </p>
+                                  </div>
+                                </div>
+                                ${senderAttchment}
+                              </div>`;
+              } else {
+                const senderAvatar =
+                  messages.sender.avatar != "" && messages.sender.avatar != null
+                    ? messages.sender.avatar
+                    : "blank.png";
+
+                let reseverAttchment = "";
+                if (messages.attchment && messages.attchment.length > 0) {
+                  reseverAttchment += "<div class='resever_send_attestMent'>";
+                  messages.attchment.forEach((attchment) => {
+                    reseverAttchment += `<img src="uploads/attestment/${attchment}" alt="send_attchment" />`;
+                  });
+                  reseverAttchment += "</div>";
+                }
+
+                messagesHtml += `<div class="singleMessages_row">
+                                <div class="chat resever">
+                                  <img src="uploads/avatar/${senderAvatar}" alt="..." />
+                                  <div class="details">
+                                    <p>${messages.text}</p>
+                                  </div>
+                                </div>
+                                ${reseverAttchment}
+                              </div>`;
+              }
+            });
+
+            messagesHtml += "</div>";
+
+            document.querySelector(".allMessageHere").innerHTML = messagesHtml;
+          } else {
+            document.querySelector(".allMessageHere").innerHTML =
+              "<div class='messages_row'>Not messages found</div>";
+          }
+        }
+        reseveMesegeInfoDiv.innerHTML = `<div class="userImgInfo">
+            <img src="uploads/avatar/${
+              current_conversation_avatar || "blank.png"
+            }" alt="single user images" />
+            <div class="nameAndTimeWhenYouSendMsg">
+              <h4 class="current_chatUser_name">${current_conversation_name}</h4>
+              <span>Active now</span>
+            </div>
+          </div>
+          <div class="callInfo">
+            <a href="#"><i class="fal fa-phone-alt"></i></a>
+            <a href="#"><i class="fad fa-video"></i></a>
+            <a href="#"><i class="fal fa-info-circle"></i></a>
+          </div>`;
+        messageDiv.style.visibility = "visible";
+        scrollTopToBottlm();
+      });
+  }
+
+  socket.on("send_message", (data) => {
+    if (current_conversation_id === data.message.current_conversation_id) {
+      if (data.message.text || data.message.attchment !== null) {
+        let messagesHtml;
+        if (data.message.sender.id === loginUserId) {
+          let attchmentSend = "";
+          if (data.message.attchment && data.message.attchment.length > 0) {
+            attchmentSend += "<div class='sender_send_attestMent'>";
+            data.message.attchment.forEach((attchment) => {
+              attchmentSend += `<img src="uploads/attestment/${attchment}" alt="send_attchment" />`;
+            });
+            attchmentSend += "</div>";
+          }
+
+          messagesHtml = `<div class="singleMessages_row">
+            <div class="chat sender">
+              <div class="details">
+                <p>
+                  ${data.message.text}
+                </p>
+              </div>
+            </div>
+            ${attchmentSend}
+          </div>`;
+        } else {
+          const senderAvatar =
+            data.message.sender.avatar != "" &&
+            data.message.sender.avatar != null
+              ? messages.sender.avatar
+              : "blank.png";
+
+          let attchmentSend = "";
+          if (data.message.attchment && data.message.attchment.length > 0) {
+            attchmentSend += "<div class='sender_send_attestMent'>";
+            data.message.attchment.forEach((attchment) => {
+              attchmentSend += `<img src="uploads/attestment/${attchment}" alt="send_attchment" />`;
+            });
+            attchmentSend += "</div>";
+          }
+
+          messagesHtml = `<div class="singleMessages_row">
+            <div class="chat resever">
+              <img src="uploads/avatar/${senderAvatar}" alt="..." />
+              <div class="details">
+                <p>${data.message.text}</p>
+              </div>
+            </div>
+            ${attchmentSend}
+          </div>`;
+        }
+        document.querySelector(".allMessageHere").innerHTML += messagesHtml;
+        scrollTopToBottlm();
+        sendMessageForm.reset();
+      }
+    }
+  });
+
+  sendMessageForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(sendMessageForm);
+    formData.append("reseveId", participateInfo.id);
+    formData.append("reseveName", participateInfo.name);
+    formData.append("reseveAvatar", participateInfo.avatar || "");
+    formData.append("conversation_id", current_conversation_id);
+
+    let response = await fetch("/message", {
+      method: "POST",
+      body: formData,
+    });
+
+    let result = await response.json();
+  });
+
+  function scrollTopToBottlm() {
+    allMessageDiv.style.scrollBehavior = "smooth";
+    allMessageDiv.scrollTop = allMessageDiv.scrollHeight;
+  }
+</script>
+<!-- toastify script link  -->
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/toastify-js"
+></script>
+
+<%-include('./includes/__footer.ejs')%>

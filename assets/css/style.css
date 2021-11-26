@@ -1,0 +1,111 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #0d1117;
+  font-family: "Poppins";
+}
+
+.login_section > .loginDiv {
+  width: 24%;
+  margin: auto;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.login_section > .loginDiv > h2 {
+  color: #c9d1d9;
+  font-weight: 200;
+  margin-bottom: 20px;
+}
+
+.login_section > .loginDiv > i {
+  font-size: 45px;
+  margin-bottom: 10px;
+  color: #ac8d10;
+}
+
+.container_form {
+  background-color: #161b22;
+  padding: 20px 15px;
+  border-radius: 5px;
+  border: 1px solid #3b3b3b;
+  margin-bottom: 20px;
+}
+
+.container_form > form > label,
+input {
+  display: block;
+}
+
+.container_form > form > label {
+  text-align: left;
+  margin-bottom: 0.3rem;
+  font-weight: 200;
+  font-size: 14px;
+  color: #c9d1d9;
+}
+
+.container_form > form > input {
+  margin: auto;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 15px;
+  padding: 6px 8px;
+  outline: none;
+  border-radius: 4px;
+  background-color: #0d1117;
+  border: 1px solid #3b3b3b;
+  color: #c9d1d9;
+}
+
+.container_form > form > input[type="text"] {
+  margin-bottom: 15px;
+}
+
+.container_form > form > input[type="submit"] {
+  background-color: #ac8d10;
+  margin-top: 20px;
+  cursor: pointer;
+  color: #c9d1d9;
+  font-size: 14;
+}
+
+.create_new {
+  border: 1px solid #3b3b3b;
+  border-radius: 4px;
+  box-sizing: border-box;
+  padding: 10px 5px;
+}
+
+.create_new > a {
+  font-size: 14px;
+  color: #559afa;
+  text-decoration: none;
+}
+
+.errors_login {
+  background-color: #f8d7da;
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #f5c2c7;
+  border-radius: 0.25rem;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.errors_login > p {
+  font-size: 14px;
+  color: #842029;
+}
+
+.errors_login > i {
+  cursor: pointer;
+}

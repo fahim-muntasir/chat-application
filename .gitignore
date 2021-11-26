@@ -1,0 +1,6 @@
+node_modules
+assets/uploads/attestment
+assets/uploads/avatar
+.env
+.txt
+.vscode
