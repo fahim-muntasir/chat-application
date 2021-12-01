@@ -11,9 +11,13 @@ searchBar.addEventListener('blur', (e) => {
     e.target.parentElement.classList.remove('chatSecrchBar-clickEfact');
 })
 
-settingBtn.addEventListener('click', () => {
+// settingBtn.addEventListener('click', () => {
+//     settingMenu.classList.toggle('show');
+// })
+
+function settingMenuShow(){
     settingMenu.classList.toggle('show');
-})
+}
 
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('settingOption') === false && e.target.classList.contains('settingIcon') === false) {
@@ -27,15 +31,25 @@ const moduleBody = document.querySelector('.moduleBody');
 const crossBtn = document.querySelector('.crossBtn');
 const addUserBtn = document.querySelector('.addUser');
 
-addUserBtn.addEventListener('click', () => {
+// addUserBtn.addEventListener('click', () => {
+//     module.classList.add('showModule');
+//     moduleBody.classList.add('showModule');
+// })
+
+function addUserModleShow(){
     module.classList.add('showModule');
     moduleBody.classList.add('showModule');
-})
+}
 
-crossBtn.addEventListener('click', () => {
+// crossBtn.addEventListener('click', () => {
+//     module.classList.remove('showModule');
+//     moduleBody.classList.remove('showModule');
+// })
+
+function addUserModleClose(){
     module.classList.remove('showModule');
     moduleBody.classList.remove('showModule');
-})
+}
 
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('module') === true) {

@@ -109,3 +109,14 @@ input {
 .errors_login > i {
   cursor: pointer;
 }
+
+/* responsive design  */
+@media only screen and (max-width: 768px) {
+  .login_section > .loginDiv {
+    width: 64%;
+  }
+
+  .login_section > .loginDiv > h2 {
+    font-size: 21px;
+  }
+}

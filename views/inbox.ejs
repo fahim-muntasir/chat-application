@@ -3,7 +3,7 @@
   <!-- popup module  -->
   <div class="module">
     <div class="moduleBody">
-      <div class="crossBtn">
+      <div onclick="addUserModleClose()" class="crossBtn">
         <i class="fal fa-times"></i>
       </div>
       <form id="addNewUserForm" enctype="multipart/form-data">
@@ -26,9 +26,12 @@
         <div class="searchBarAndTitle">
           <div class="chatHeader">
             <h2>Hi, <%=locals.logInUser.name%></h2>
-            <i class="far fa-ellipsis-h settingIcon"></i>
+            <i
+              onclick="settingMenuShow()"
+              class="far fa-ellipsis-h settingIcon"
+            ></i>
             <div class="settingOption">
-              <span class="addUser"
+              <span onclick="addUserModleShow()" class="addUser"
                 ><i class="fad fa-user-plus"></i> Add User</span
               >
               <span onclick="logout()" class="logout"
@@ -123,10 +126,110 @@
         </div>
       </div>
       <div class="chatBox">
+        <div class="res_allUsers">
+          <div class="res_allUsers_container">
+            <div class="res_searchUsers">
+              <i
+                onclick="resHideUserList()"
+                class="searchBarHide_btn fal fa-times"
+              ></i>
+
+              <input
+                type="text"
+                id="res_searchUsersInput"
+                placeholder="Search..."
+              />
+              <div class="res_searchError"></div>
+            </div>
+            <div class="res_userList_container">
+              <ul class="res_usersList">
+                <% data.forEach(function (conversation) { %> <%
+                if(conversation.creator.id == logInUser.id) {%>
+                <li>
+                  <div
+                    onclick="getMessages('<%=conversation._id%>', '<%=conversation.participate.name%>', '<%=conversation.participate.avatar%>')"
+                  >
+                    <% if(conversation.participate.avatar){ %>
+                    <img
+                      src="uploads/avatar/<%=conversation.participate.avatar%>"
+                      alt="single user images"
+                    />
+                    <% } else { %>
+                    <img
+                      src="uploads/avatar/blank.png"
+                      alt="single user images"
+                    />
+                    <% } %>
+                    <div class="res_userSingleInfo">
+                      <h4><%=conversation.participate.name %></h4>
+                      <span>Conversation Now</span>
+                    </div>
+                  </div>
+                </li>
+                <% } else { %>
+                <li>
+                  <div
+                    onclick="getMessages('<%=conversation._id%>', '<%=conversation.creator.name%>', '<%=conversation.creator.avatar%>')"
+                  >
+                    <% if(conversation.creator.avatar){ %>
+                    <img
+                      src="uploads/avatar/<%=conversation.creator.avatar%>"
+                      alt="single user images"
+                    />
+                    <% } else { %>
+                    <img
+                      src="uploads/avatar/blank.png"
+                      alt="single user images"
+                    />
+                    <% } %>
+                    <div class="res_userSingleInfo">
+                      <h4><%=conversation.creator.name %></h4>
+                      <span>Conversation Now</span>
+                    </div>
+                  </div>
+                </li>
+                <% } %> <%})%>
+
+                <!-- <li>
+                  <div>
+                    <img src="uploads/avatar/blank.png" alt="..." />
+                    <div class="res_userSingleInfo">
+                      <h4>Fahim muntasir</h4>
+                      <span>Conversation Now</span>
+                    </div>
+                  </div>
+                </li> -->
+              </ul>
+            </div>
+          </div>
+        </div>
+
         <div class="reseveMessegeUserInfo">
+          <div class="res_usersIcon">
+            <i
+              onclick="resShowUserList()"
+              id="show_resUsersMenu"
+              class="fad fa-users"
+            ></i>
+          </div>
           <h2 class="conversationTitleBeforeCreateCon">
             Create a conversation
           </h2>
+
+          <div class="res_settingDiv">
+            <i
+              onclick="resSettingMenuShow()"
+              class="far fa-ellipsis-h settingIcon"
+            ></i>
+            <div class="res_settingOption">
+              <span onclick="addUserModleShow()" class="addUser"
+                ><i class="fad fa-user-plus"></i> Add User</span
+              >
+              <span onclick="logout()" class="logout"
+                ><i class="fad fa-sign-out"></i> Logout</span
+              >
+            </div>
+          </div>
           <!-- <div class="userImgInfo">
             <img src="img/mypic.jpg" alt="single user images" />
             <div class="nameAndTimeWhenYouSendMsg">
@@ -344,7 +447,6 @@
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         if (data.errors) {
           searchError.style.display = "block";
           searchError.innerHTML = `<p>${data.errors.msg}</p>`;
@@ -391,7 +493,8 @@
         if (result) {
           setTimeout(() => {
             location.reload();
-          }, 1000);
+            resShowUserList();
+          }, 900);
         } else {
           console.log(result.errors.msg);
         }
@@ -466,7 +569,7 @@
             document.querySelector(".allMessageHere").innerHTML = messagesHtml;
           } else {
             document.querySelector(".allMessageHere").innerHTML =
-              "<div class='messages_row'>Not messages found</div>";
+              "<div class='messages_row'></div>";
           }
         }
         reseveMesegeInfoDiv.innerHTML = `<div class="userImgInfo">
@@ -479,10 +582,17 @@
             </div>
           </div>
           <div class="callInfo">
+            <div class="res_usersIcon" style="padding-top:0">
+              <i onclick="resShowUserList()" id="show_resUsersMenu" class="fad fa-users"></i>
+            </div>
             <a href="#"><i class="fal fa-phone-alt"></i></a>
             <a href="#"><i class="fad fa-video"></i></a>
             <a href="#"><i class="fal fa-info-circle"></i></a>
+            <div class="res_settingDiv" style="margin-left: 18px">
+              <i onclick="reloadPage()" class="fad fa-long-arrow-alt-right"></i>
+            </div>
           </div>`;
+        resHideUserList();
         messageDiv.style.visibility = "visible";
         scrollTopToBottlm();
       });
@@ -516,12 +626,12 @@
           const senderAvatar =
             data.message.sender.avatar != "" &&
             data.message.sender.avatar != null
-              ? messages.sender.avatar
+              ? data.message.sender.avatar
               : "blank.png";
 
           let attchmentSend = "";
           if (data.message.attchment && data.message.attchment.length > 0) {
-            attchmentSend += "<div class='sender_send_attestMent'>";
+            attchmentSend += "<div class='resever_send_attestMent'>";
             data.message.attchment.forEach((attchment) => {
               attchmentSend += `<img src="uploads/attestment/${attchment}" alt="send_attchment" />`;
             });
@@ -571,5 +681,7 @@
   type="text/javascript"
   src="https://cdn.jsdelivr.net/npm/toastify-js"
 ></script>
+<script src="js/inbox_responsive.js"></script>
+<script src="js/inbox.js"></script>
 
 <%-include('./includes/__footer.ejs')%>
